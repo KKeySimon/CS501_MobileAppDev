@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/num_1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:hint="@string/hint"
+        android:inputType="numberDecimal|numberSigned"/>
+    <EditText
+        android:id="@+id/num_2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:hint="@string/hint"
+        android:inputType="numberDecimal|numberSigned"/>
+    <RadioGroup android:id="@+id/operators"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/plus">
+        <RadioButton android:id="@+id/plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/plus"/>
+        <RadioButton android:id="@+id/minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/minus"/>
+        <RadioButton android:id="@+id/mul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mul"/>
+        <RadioButton android:id="@+id/div"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/div"/>
+        <RadioButton android:id="@+id/mod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mod"/>
+    </RadioGroup>
+    <Button
+        android:id="@+id/calc_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calc" />
+    <TextView android:id="@+id/res"
+        android:textSize="24sp"
+        android:padding="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

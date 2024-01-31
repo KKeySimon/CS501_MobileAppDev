@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Assignment2_Q4</string>
+    <string name="hint">Input a number</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="mul">*</string>
+    <string name="div">/</string>
+    <string name="mod">%</string>
+    <string name="calc">Calculate</string>
+    <string name="empty_arg_err">Error: Fill in Both Number Fields</string>
+    <string name="div_by_zero_err">Error: Division By Zero</string>
+</resources>
