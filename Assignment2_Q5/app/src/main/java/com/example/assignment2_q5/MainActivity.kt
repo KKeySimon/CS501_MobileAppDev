@@ -6,6 +6,7 @@ import android.widget.Button
 import android.view.View
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
+import kotlin.math.sqrt
 
 class MainActivity : AppCompatActivity() {
     private lateinit var numButtons: Array<Button>
@@ -13,10 +14,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var displayText: TextView
     private lateinit var doubleOpButtons: Array<Button>
     private lateinit var calcButton: Button
+    private lateinit var sqrtButton: Button
 
     private var displayNum = 0.0
     private var dotEnabled = false
-    private var secondNum = false
     private var decMultiplier = 10
     private var operator = '?'
     private var num1 = 0.0
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         )
         dotButton = findViewById(R.id.dot)
         displayText = findViewById(R.id.number)
+        sqrtButton = findViewById(R.id.sqrt)
         calcButton = findViewById(R.id.equals)
 
         numButtons.forEach { num ->
@@ -68,15 +70,21 @@ class MainActivity : AppCompatActivity() {
                     "*" -> operator = '*'
                     "/" -> operator = '/'
                 }
-                if (!secondNum) {
-                    num1 = displayNum
-                    displayNum = 0.0
-                }
+                num1 = displayNum
+                displayNum = 0.0
+                dotEnabled = false
             }
         }
 
         dotButton.setOnClickListener { view: View ->
             dotEnabled = true
+            decMultiplier = 10
+        }
+        sqrtButton.setOnClickListener { view: View ->
+            dotEnabled = false
+            decMultiplier = 10
+            displayNum = sqrt(displayNum)
+            displayText.text = displayNum.toString()
         }
 
         calcButton.setOnClickListener { view: View ->
@@ -107,7 +115,7 @@ class MainActivity : AppCompatActivity() {
             }
             displayNum = 0.0
             operator = '?'
-            secondNum = false
+            dotEnabled = false
         }
     }
 }
