@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Assignment2_Q5</string>
+    <string name="div_by_zero_err">Error: Division By Zero</string>
+    <string name="empty_op_err">Error: Pick An Operator</string>
 </resources>
