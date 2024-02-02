@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private var decMultiplier = 10
     private var operator = '?'
     private var num1 = 0.0
+    private var num2 = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,25 +54,29 @@ class MainActivity : AppCompatActivity() {
                 if (!dotEnabled) {
                     displayNum *= 10
                     displayNum += num.text.toString().toInt()
-                    displayText.text = displayNum.toString()
                 } else {
                     displayNum += num.text.toString().toDouble() / decMultiplier
                     decMultiplier *= 10
-                    displayText.text = displayNum.toString()
                 }
+                num1 = displayNum
+                displayText.text = displayNum.toString()
             }
         }
 
         doubleOpButtons.forEach { op ->
             op.setOnClickListener { view: View ->
+                if (num2 != 0.0) {
+                    calc(view)
+                }
                 when (op.text) {
                     "+" -> operator = '+'
                     "-" -> operator = '-'
                     "*" -> operator = '*'
                     "/" -> operator = '/'
                 }
-                num1 = displayNum
+                num2 = num1
                 displayNum = 0.0
+                num1 = displayNum
                 dotEnabled = false
             }
         }
@@ -83,39 +88,48 @@ class MainActivity : AppCompatActivity() {
         sqrtButton.setOnClickListener { view: View ->
             dotEnabled = false
             decMultiplier = 10
-            displayNum = sqrt(displayNum)
+            num2 = 0.0
+            num1 = sqrt(num1)
+            displayNum = num1
             displayText.text = displayNum.toString()
+            displayNum = 0.0
         }
 
         calcButton.setOnClickListener { view: View ->
-            when (operator) {
-                '+' -> displayText.text = (num1 + displayNum).toString()
-                '-' -> displayText.text = (num1 - displayNum).toString()
-                '*' -> displayText.text = (num1 * displayNum).toString()
-                '/' -> {
-                    if (displayNum == 0.0) {
-                        Snackbar.make(
-                            view,
-                            R.string.div_by_zero_err,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                        displayText.text = 0.toString()
-                    } else {
-                        displayText.text = (num1 / displayNum).toString()
-                    }
-                }
-                '?' -> {
+            calc(view)
+            num2 = 0.0
+            operator = '?'
+        }
+    }
+    private fun calc(view : View) {
+        when (operator) {
+            '+' -> displayNum = num2 + num1
+            '-' -> displayNum = num2 - num1
+            '*' -> displayNum = num2 * num1
+            '/' -> {
+                if (num1 == 0.0) {
                     Snackbar.make(
                         view,
-                        R.string.empty_op_err,
+                        R.string.div_by_zero_err,
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    displayText.text = 0.0.toString()
+                    displayNum = 0.0
+                } else {
+                    displayNum = num2 / num1
                 }
             }
-            displayNum = 0.0
-            operator = '?'
-            dotEnabled = false
+            '?' -> {
+                Snackbar.make(
+                    view,
+                    R.string.empty_op_err,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                displayNum = 0.0
+            }
         }
+        num1 = displayNum
+        displayText.text = displayNum.toString()
+        displayNum = 0.0
+        dotEnabled = false
     }
 }
