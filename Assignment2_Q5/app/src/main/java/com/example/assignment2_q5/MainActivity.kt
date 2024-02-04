@@ -7,11 +7,14 @@ import android.view.View
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import kotlin.math.sqrt
+import android.text.TextWatcher
+import android.text.Editable
+import android.widget.EditText
 
 class MainActivity : AppCompatActivity() {
     private lateinit var numButtons: Array<Button>
     private lateinit var dotButton: Button
-    private lateinit var displayText: TextView
+    private lateinit var displayText: EditText
     private lateinit var doubleOpButtons: Array<Button>
     private lateinit var calcButton: Button
     private lateinit var sqrtButton: Button
@@ -59,9 +62,26 @@ class MainActivity : AppCompatActivity() {
                     decMultiplier *= 10
                 }
                 num1 = displayNum
-                displayText.text = displayNum.toString()
+                displayText.setText(displayNum.toString())
             }
         }
+
+        // Figured out how to use this function with ChatGPT
+        displayText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val inputText = s.toString()
+                if (inputText.isNotEmpty()) {
+                    displayNum = inputText.toDouble()
+                } else {
+                    displayNum = 0.0
+                }
+                num1 = displayNum
+            }
+
+            override fun afterTextChanged(s: Editable) {}
+        })
 
         doubleOpButtons.forEach { op ->
             op.setOnClickListener { view: View ->
@@ -91,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             num2 = 0.0
             num1 = sqrt(num1)
             displayNum = num1
-            displayText.text = displayNum.toString()
+            displayText.setText(displayNum.toString())
             displayNum = 0.0
         }
 
@@ -128,7 +148,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         num1 = displayNum
-        displayText.text = displayNum.toString()
+        displayText.setText(displayNum.toString())
         displayNum = 0.0
         dotEnabled = false
     }
